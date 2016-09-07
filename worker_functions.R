@@ -14,7 +14,7 @@ RobustMax <- function(x) {if (sum(!is.na(x))>0) max(x,na.rm = TRUE) else NA}
 RobustMin <- function(x) {if (sum(!is.na(x))>0) min(x,na.rm = TRUE) else NA}
 
 
-#REadin test data
+#Reading test data
 TEST_FILE <- read.csv("TEST_FILE.csv",stringsAsFactors = FALSE)[1:63,]
 
 
