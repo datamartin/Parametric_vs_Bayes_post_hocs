@@ -15,7 +15,7 @@ RobustMin <- function(x) {if (sum(!is.na(x))>0) min(x,na.rm = TRUE) else NA}
 
 
 
-TEST_FILE <- read.csv("C:/Users/Abha22/Desktop/TEST_FILE.csv",stringsAsFactors = FALSE)[1:63,]
+TEST_FILE <- read.csv("TEST_FILE.csv",stringsAsFactors = FALSE)[1:63,]
 
 
 inter <- with(TEST_FILE, interaction(F1, F2))
@@ -751,16 +751,6 @@ aa <- post_hoc(a,post.hoc.type = "duncan.test")
 aaa <- post_hoc_plot(post.hoc.object = aa,interaction.object = a,p.val.criteria = 0.05,BF.criteria = 0)
 
 
-
-
-install.packages("HDInterva")
-install.packages("car")
-
-install.packages("BEST")
-library(BEST)
-
-
-
 data <- a@df
 data <- data[data[,"interaction"] == "A###E"| data[,"interaction"] == "B###Q",]
 BF.res = ttestBF(formula = as.formula(VAL ~ interaction), data = data)
@@ -770,5 +760,5 @@ abs(BF.res@bayesFactor[,"bf"])
 
 
 #Playground
-
+library(BEST)
 hdi(data[data[,"interaction"] == "B###Q","VAL"], credMass = 0.682)
