@@ -21,12 +21,6 @@ TEST_FILE <- read.csv("TEST_FILE.csv",stringsAsFactors = FALSE)[1:63,]
 inter <- with(TEST_FILE, interaction(F1, F2))
 
 
-
-
-
-
-
-
 setClass("interaction",
          representation(df = "data.frame",
                         f1.label = "character",
