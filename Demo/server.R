@@ -7,10 +7,11 @@ library(BayesFactor)
 library(cowplot)
 library(ggthemes)
 library(stringr)
+library(shinyjs)
 library(psych)#for datasets
 source('C:/Users/Martin/ownCloud/Projects/R_APP16/app/CodesMartin/PBcomp_demo2/PBcomp_demo2/worker_functionsApp.R', local = TRUE)
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
 
         # Return the requested dataset
         datasetInput <- reactive({
@@ -19,6 +20,7 @@ shinyServer(function(input, output) {
                        "Example data2" = affect,
                        "own" = )
         })
+        
         observe({
                 input$reset1
                 print("resetting")
@@ -187,7 +189,7 @@ shinyServer(function(input, output) {
                         dfc[,varc] <- as.numeric(dfc[,varc])
                         ac <- interaction.maker(df = dfc ,factor1 = f1c, factor2 = f2c, value = varc)
                         aac <- post_hoc(ac, post.hoc.type = postHoctype())
-                        aaa <- post_hoc_plot(post.hoc.object = aac,interaction.object = ac, p.val.criteria = 0.05,BF.criteria = 0)
+                        aaa <- post_hoc_plot(post.hoc.object = aac,interaction.object = ac, p.val.criteria = input$pvalue,BF.criteria = input$BF)
                         return(aaa)
                 }
 
@@ -216,41 +218,102 @@ shinyServer(function(input, output) {
         # })
 
         # Factor 1 results
-        observeEvent(input$f1results, { 
-                output$phtestf1 <- renderText({
-                                aa()@post.hoc.type
-                })
-                output$resultsf1out <- renderTable({
-                                aa()@f1.comps
-                })
-                output$plotf1out <- renderPlot({
-                                print(aaa()@plot.f1)
-                })
+        f1posthoctype <- eventReactive(input$f1results, {
+                ulaf <- aa()@post.hoc.type
+                ulaf
         })
+
+        output$phtestf123 <- renderText({
+                 f1posthoctype()
+        })
+
+        f1comp <- eventReactive(input$f1results, {
+                tablef1 <- aa()@f1.comps
+                tablef1
+        })
+        output$summary2 <- renderTable({
+                f1comp()
+        })
+        f1plot <- eventReactive(input$f1results, {
+                pp <- aaa()@plot.f1
+                pp
+        })
+        output$plotf1out32 <- renderPlot({
+                f1plot()
+        })
+        
+        # output$phtestf1 <- renderText({
+        #         f1posthoctype()
+        # })
+
+
+        #observe(updateTextInput(session, "Post Hoc resutls F1", value = f1results()))
+        
+        # observe(input$f1results, { 
+        #         output$phtestf1 <- renderText({
+        #                 aa()@post.hoc.type
+        #         })
+        #         output$resultsf1out <- renderTable({
+        #                 aa()@f1.comps
+        #         })
+        #         output$plotf1out <- renderPlot({
+        #                 progress <- Progress$new(session, min=1, max=15)
+        #                 on.exit(progress$close())
+        #                 
+        #                 progress$set(message = 'Calculation in progress',
+        #                              detail = 'This may take a while...')
+        #                 
+        #                 for (i in 1:15) {
+        #                         progress$set(value = i)
+        #                         Sys.sleep(0.1)
+        #                 }
+        #                 print(aaa()@plot.f1)
+        #         })
+        # })
 
         # Factor 2 results
         observeEvent(input$f2results, {
                 output$phtestf2 <- renderText({
-                                aa()@post.hoc.type
+                        aa()@post.hoc.type
                 })
                 output$resultsf2out <- renderTable({
-                                aa()@f2.comps
+                        aa()@f2.comps
                 })
                 output$plotf2out <- renderPlot({
-                                print(aaa()@plot.f2)
+                        progress <- Progress$new(session, min=1, max=15)
+                        on.exit(progress$close())
+                        
+                        progress$set(message = 'Calculation in progress',
+                                     detail = 'This may take a while...')
+                        
+                        for (i in 1:15) {
+                                progress$set(value = i)
+                                Sys.sleep(0.1)
+                        }
+                        print(aaa()@plot.f2)
                 })
         })
         
         # Interaction results
         observeEvent(input$intresults, {
                 output$phtestint <- renderText({
-                                aa()@post.hoc.type
+                        aa()@post.hoc.type
                 })
                 output$intresultsout <- renderTable({
-                                aa()@interaction.comps
+                        aa()@interaction.comps
                 })
                 output$plotinterout <- renderPlot({
-                                print(aaa()@plot.inter)
+                        progress <- Progress$new(session, min=1, max=15)
+                        on.exit(progress$close())
+                        
+                        progress$set(message = 'Calculation in progress',
+                                     detail = 'This may take a while...')
+                        
+                        for (i in 1:15) {
+                                progress$set(value = i)
+                                Sys.sleep(0.1)
+                        }
+                        print(aaa()@plot.inter)
                 })
         })
 })
