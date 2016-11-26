@@ -10,8 +10,8 @@ shinyUI(fluidPage(
                 
                 selectInput("posthocs", "Choose a post hoc test:", 
                             choices = c("LSD", "HSD", "Duncan")),
-                
-                numericInput("obs", "Number of observations to view:", 3),
+                numericInput("pvalue", "Set p-value cut off:", min = 0, max = 1, value = 0.05, step = 0.01),
+                numericInput("BF", "Set BayesFactor cut off:", min = 0, max = 10, value = 0, step = 0.1),
                 #These column selectors are dynamically created when the file is loaded
                 uiOutput("Factor1"),
                 uiOutput("Factor2"),

@@ -175,7 +175,7 @@ shinyServer(function(input, output) {
                         dfc[,varc] <- as.numeric(dfc[,varc])
                         ac <- interaction.maker(df = dfc ,factor1 = f1c, factor2 = f2c, value = varc)
                         aac <- post_hoc(ac, post.hoc.type = postHoctype())
-                        aaa <- post_hoc_plot(post.hoc.object = aac,interaction.object = ac, p.val.criteria = 0.05,BF.criteria = 0)
+                        aaa <- post_hoc_plot(post.hoc.object = aac,interaction.object = ac, p.val.criteria = input$pvalue, BF.criteria = input$BF)
                         return(aaa)
                 }else{
                         dfc <-datasetInput()
