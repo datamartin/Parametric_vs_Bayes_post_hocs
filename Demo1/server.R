@@ -9,7 +9,7 @@ library(ggthemes)
 library(stringr)
 library(shinyjs)
 library(psych)#for datasets
-source('C:/Users/Martin/ownCloud/Projects/R_APP16/app/CodesMartin/PBcomp_demo2/PBcomp_demo2/worker_functionsApp.R', local = TRUE)
+source('C:/Users/Martin/ownCloud/Projects/R_APP16/app/Parametric_vs_Bayes_post_hocs/Demo1/worker_functionsApp.R', local = TRUE)
 
 shinyServer(function(input, output, session) {
 
