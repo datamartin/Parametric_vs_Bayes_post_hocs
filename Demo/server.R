@@ -21,21 +21,21 @@ shinyServer(function(input, output, session) {
                        "own" = )
         })
         
-        observe({
-                input$reset1
-                print("resetting")
-                output$phtestf1 <- renderText({NULL})
-                output$resultsf1out <- renderTable({NULL})
-                output$plotf1out <- renderPlot({NULL})
-                
-                output$phtestf2 <- renderText({NULL})
-                output$resultsf2out <- renderTable({NULL})
-                output$plotf2out <- renderPlot({NULL})
-                
-                output$intresults <- renderText({NULL})
-                output$intresultsout <- renderTable({NULL})
-                output$plotinterout <- renderPlot({NULL})
-        })
+        # observe({
+        #         input$reset1
+        #         print("resetting")
+        #         output$phtestf1 <- renderText({NULL})
+        #         output$resultsf1out <- renderTable({NULL})
+        #         output$plotf1out <- renderPlot({NULL})
+        #         
+        #         output$phtestf2 <- renderText({NULL})
+        #         output$resultsf2out <- renderTable({NULL})
+        #         output$plotf2out <- renderPlot({NULL})
+        #         
+        #         output$intresults <- renderText({NULL})
+        #         output$intresultsout <- renderTable({NULL})
+        #         output$plotinterout <- renderPlot({NULL})
+        # })
         # Return the post hoc request
         postHoctype <- reactive({
                 switch(input$posthocs,
@@ -219,11 +219,11 @@ shinyServer(function(input, output, session) {
 
         # Factor 1 results
         f1posthoctype <- eventReactive(input$f1results, {
-                ulaf <- aa()@post.hoc.type
-                ulaf
+                f1type <- paste("Post hoc test type for parametric analysis: ", aa()@post.hoc.type, sep="")
+                f1type
         })
 
-        output$phtestf123 <- renderText({
+        output$F1testout <- renderText({
                  f1posthoctype()
         })
 
@@ -231,22 +231,21 @@ shinyServer(function(input, output, session) {
                 tablef1 <- aa()@f1.comps
                 tablef1
         })
-        output$summary2 <- renderTable({
+        output$F1tableout <- renderTable({
                 f1comp()
         })
         f1plot <- eventReactive(input$f1results, {
+                progress <- Progress$new(session, min=1, max=15)
+                on.exit(progress$close())
+                progress$set(message = 'Calculation in progress',
+                             detail = 'This may take a while...')
                 pp <- aaa()@plot.f1
                 pp
         })
-        output$plotf1out32 <- renderPlot({
+        output$F1plotout <- renderPlot({
+
                 f1plot()
         })
-        
-        # output$phtestf1 <- renderText({
-        #         f1posthoctype()
-        # })
-
-
         #observe(updateTextInput(session, "Post Hoc resutls F1", value = f1results()))
         
         # observe(input$f1results, { 
@@ -272,48 +271,103 @@ shinyServer(function(input, output, session) {
         # })
 
         # Factor 2 results
-        observeEvent(input$f2results, {
-                output$phtestf2 <- renderText({
-                        aa()@post.hoc.type
-                })
-                output$resultsf2out <- renderTable({
-                        aa()@f2.comps
-                })
-                output$plotf2out <- renderPlot({
-                        progress <- Progress$new(session, min=1, max=15)
-                        on.exit(progress$close())
-                        
-                        progress$set(message = 'Calculation in progress',
-                                     detail = 'This may take a while...')
-                        
-                        for (i in 1:15) {
-                                progress$set(value = i)
-                                Sys.sleep(0.1)
-                        }
-                        print(aaa()@plot.f2)
-                })
+        f2posthoctype <- eventReactive(input$f2results, {
+                f2type <- paste("Post hoc test type for parametric analysis: ",aa()@post.hoc.type, sep="")
+                f2type
         })
         
-        # Interaction results
-        observeEvent(input$intresults, {
-                output$phtestint <- renderText({
-                        aa()@post.hoc.type
-                })
-                output$intresultsout <- renderTable({
-                        aa()@interaction.comps
-                })
-                output$plotinterout <- renderPlot({
-                        progress <- Progress$new(session, min=1, max=15)
-                        on.exit(progress$close())
-                        
-                        progress$set(message = 'Calculation in progress',
-                                     detail = 'This may take a while...')
-                        
-                        for (i in 1:15) {
-                                progress$set(value = i)
-                                Sys.sleep(0.1)
-                        }
-                        print(aaa()@plot.inter)
-                })
+        output$F2testout <- renderText({
+                f2posthoctype()
         })
+        
+        f2comp <- eventReactive(input$f2results, {
+                tablef2 <- aa()@f2.comps
+                tablef2
+        })
+        output$F2tableout <- renderTable({
+                f2comp()
+        })
+        f2plot <- eventReactive(input$f2results, {
+                progress <- Progress$new(session, min=1, max=15)
+                on.exit(progress$close())
+                progress$set(message = 'Calculation in progress',
+                             detail = 'This may take a while...')
+                plotf2 <- aaa()@plot.f2
+                plotf2
+        })
+        output$F2plotout <- renderPlot({
+                f2plot()
+        })
+        # observeEvent(input$f2results, {
+        #         output$phtestf2 <- renderText({
+        #                 aa()@post.hoc.type
+        #         })
+        #         output$resultsf2out <- renderTable({
+        #                 aa()@f2.comps
+        #         })
+        #         output$plotf2out <- renderPlot({
+        #                 progress <- Progress$new(session, min=1, max=15)
+        #                 on.exit(progress$close())
+        #                 
+        #                 progress$set(message = 'Calculation in progress',
+        #                              detail = 'This may take a while...')
+        #                 
+        #                 for (i in 1:15) {
+        #                         progress$set(value = i)
+        #                         Sys.sleep(0.1)
+        #                 }
+        #                 print(aaa()@plot.f2)
+        #         })
+        # })
+        
+        # Interaction results
+        intposthoctype <- eventReactive(input$intresults, {
+                f2type <- paste("Post hoc test type for parametric analysis: ",aa()@post.hoc.type,sep="")
+                f2type
+        })
+        
+        output$INTtestout <- renderText({
+                intposthoctype()
+        })
+        
+        intcomp <- eventReactive(input$intresults, {
+                tableint <- aa()@interaction.comps
+                tableint
+        })
+        output$INTtableout <- renderTable({
+                intcomp()
+        })
+        intplot <- eventReactive(input$intresults, {
+                progress <- Progress$new(session, min=1, max=15)
+                on.exit(progress$close())
+                progress$set(message = 'Calculation in progress',
+                             detail = 'This may take a while...')
+                plotint <- aaa()@plot.inter
+                plotint
+        })
+        output$INTplotout <- renderPlot({
+
+                intplot()
+        })
+        # observeEvent(input$intresults, {
+        #         output$phtestint <- renderText({
+        #                 aa()@post.hoc.type
+        #         })
+        #         output$intresultsout <- renderTable({
+        #                 aa()@interaction.comps
+        #         })
+        #         output$plotinterout <- renderPlot({
+        #                 progress <- Progress$new(session, min=1, max=15)
+        #                 on.exit(progress$close())
+        #                 
+        #                 progress$set(message = 'Calculation in progress',
+        #                              detail = 'This may take a while...')
+        #                 
+        #                 for (i in 1:15) {
+        #                         progress$set(value = i)
+        #                         Sys.sleep(0.1)
+        #                 }
+        #                 print(aaa()@plot.inter)
+        #         })
+        # })
 })

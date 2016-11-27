@@ -11,7 +11,7 @@ shinyUI(fluidPage(
                 selectInput("posthocs", "Choose a post hoc test:", 
                             choices = c("LSD", "HSD", "Duncan")),
                 numericInput("pvalue", "Set p-value cut off:", min = 0, max = 1, value = 0.05, step = 0.01),
-                numericInput("BF", "Set BayesFactor cut off:", min = 0, max = 10, value = 0, step = 0.1),
+                numericInput("BF", "Set BayesFactor cut off:", min = 0, max = 10, value = 1.6, step = 0.1),
                 #These column selectors are dynamically created when the file is loaded
                 uiOutput("Factor1"),
                 uiOutput("Factor2"),
@@ -19,8 +19,8 @@ shinyUI(fluidPage(
                 #actionButton("inter", "Show interaction structure"),
                 actionButton("f1results", "Show Factor 1 results"),
                 actionButton("f2results", "Show Factor 2 results"),
-                actionButton("intresults", "Show interaction results"),
-                actionButton("reset1", "Reset")
+                actionButton("intresults", "Show interaction results")
+                #actionButton("reset1", "Reset")
                 
         ),
         mainPanel(
@@ -39,9 +39,9 @@ shinyUI(fluidPage(
                             tabPanel("Example data intro",
                                      p("coming soon...")),
                             tabPanel("Structure of data", verbatimTextOutput("summary")),
-                            tabPanel("Post Hoc tests with F1",textOutput("phtestf123"), tableOutput("summary2"),plotOutput("plotf1out32")),
-                            tabPanel("Post Hoc plot F2",textOutput("phtestf2"),tableOutput("resultsf2out"),plotOutput("plotf2out")),
-                            tabPanel("Post Hoc plot interaction",textOutput("phtestint"),tableOutput("intresultsout"),plotOutput("plotinterout"))
+                            tabPanel("Post Hoc tests with F1",textOutput("F1testout"), tableOutput("F1tableout"),plotOutput("F1plotout")),
+                            tabPanel("Post Hoc tests with F2",textOutput("F2testout"), tableOutput("F2tableout"),plotOutput("F2plotout")),
+                            tabPanel("Post Hoc tests - interaction",textOutput("INTtestout"), tableOutput("INTtableout"),plotOutput("INTplotout"))
                 ),
                 tableOutput("interaction")
         )
