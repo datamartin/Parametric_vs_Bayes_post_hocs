@@ -125,7 +125,7 @@ shinyServer(function(input, output, session) {
                         df[,f1] <- as.character(df[,f1])
                         df[,f2] <- as.character(df[,f2])
                         df[,var] <- as.numeric(df[,var])
-                        a <- interaction.maker(df = df ,factor1 = f1, factor2 = f2, value = var, credvalue = input$CM)
+                        a <- interaction.maker(df = df ,factor1 = f1, factor2 = f2, value = var, credvalue = 0.68)
                         return(a)
                 }else{
                         df <-datasetInput()
@@ -135,7 +135,7 @@ shinyServer(function(input, output, session) {
                         df[,f1] <- as.character(df[,f1])
                         df[,f2] <- as.character(df[,f2])
                         df[,var] <- as.numeric(df[,var])
-                        a <- interaction.maker(df = df ,factor1 = f1, factor2 = f2, value = var, credvalue = input$CM)
+                        a <- interaction.maker(df = df ,factor1 = f1, factor2 = f2, value = var, credvalue = 0.68)
                         return(a)
                 }
 
@@ -149,7 +149,7 @@ shinyServer(function(input, output, session) {
                         dfb[,f1b] <- as.character(dfb[,f1b])
                         dfb[,f2b] <- as.character(dfb[,f2b])
                         dfb[,varb] <- as.numeric(dfb[,varb])
-                        ab <- interaction.maker(df = dfb ,factor1 = f1b, factor2 = f2b, value = varb, credvalue = input$CM)
+                        ab <- interaction.maker(df = dfb ,factor1 = f1b, factor2 = f2b, value = varb, credvalue = 0.68)
                         aa <- post_hoc(ab, post.hoc.type = postHoctype())
                         return(aa)
                 }else{
@@ -160,7 +160,7 @@ shinyServer(function(input, output, session) {
                         dfb[,f1b] <- as.character(dfb[,f1b])
                         dfb[,f2b] <- as.character(dfb[,f2b])
                         dfb[,varb] <- as.numeric(dfb[,varb])
-                        ab <- interaction.maker(df = dfb ,factor1 = f1b, factor2 = f2b, value = varb, credvalue = input$CM)
+                        ab <- interaction.maker(df = dfb ,factor1 = f1b, factor2 = f2b, value = varb, credvalue = 0.68)
                         aa <- post_hoc(ab, post.hoc.type = postHoctype())
                         return(aa)
                 }
@@ -175,7 +175,7 @@ shinyServer(function(input, output, session) {
                         dfc[,f1c] <- as.character(dfc[,f1c])
                         dfc[,f2c] <- as.character(dfc[,f2c])
                         dfc[,varc] <- as.numeric(dfc[,varc])
-                        ac <- interaction.maker(df = dfc ,factor1 = f1c, factor2 = f2c, value = varc, credvalue = input$CM)
+                        ac <- interaction.maker(df = dfc ,factor1 = f1c, factor2 = f2c, value = varc, credvalue = 0.68)
                         aac <- post_hoc(ac, post.hoc.type = postHoctype())
                         aaa <- post_hoc_plot(post.hoc.object = aac,interaction.object = ac, p.val.criteria = input$pvalue, BF.criteria = input$BF)
                         return(aaa)
@@ -187,7 +187,7 @@ shinyServer(function(input, output, session) {
                         dfc[,f1c] <- as.character(dfc[,f1c])
                         dfc[,f2c] <- as.character(dfc[,f2c])
                         dfc[,varc] <- as.numeric(dfc[,varc])
-                        ac <- interaction.maker(df = dfc ,factor1 = f1c, factor2 = f2c, value = varc, credvalue = input$CM)
+                        ac <- interaction.maker(df = dfc ,factor1 = f1c, factor2 = f2c, value = varc, credvalue = 0.68)
                         aac <- post_hoc(ac, post.hoc.type = postHoctype())
                         aaa <- post_hoc_plot(post.hoc.object = aac,interaction.object = ac, p.val.criteria = input$pvalue,BF.criteria = input$BF)
                         return(aaa)
